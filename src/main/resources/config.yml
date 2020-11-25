@@ -1,0 +1,81 @@
+# This is the default configuration file for the MCMMO-A plugin. The changes made here will not have any effect over the original MCMMO plugin.
+
+
+
+
+
+
+
+
+#                                                    __________
+#                                                   | ECONOMY |
+#                                                   ----------
+# Percentage of the amount of money that the player will gain by leveling up a certain skill
+levelup-money-mining:      "default"
+levelup-money-woodcutting: "default"
+levelup-money-excavation:  "default"
+levelup-money-fishing:     "default"
+levelup-money-herbalism:   "default"
+levelup-money-acrobatics:  "default"
+levelup-money-archery:     "default"
+levelup-money-axes:        "default"
+levelup-money-swords:      "default"
+levelup-money-unarmed:     "default"
+levelup-money-alchemy:     "default"
+levelup-money-repair:      "default"
+levelup-money-taming:      "default"
+levelup-money-salvage:     "default"  # Will become part of Smithing in a future update. (https://mcmmo.org/wiki/Main_Page#Skills)
+levelup-money-smelting:    "default"  # Will become part of Smithing in a future update. (https://mcmmo.org/wiki/Main_Page#Skills)
+
+
+
+
+
+
+#                                                ______________
+#                                               | PERMISSIONS |
+#                                               --------------
+# Permission to gain money by leveling up can be enabled or disabled for every kind of level up.
+# True means that permission is needed, false means that anyone who has mcmmoa.levelup permission can get money by levelling up.
+levelup-money-pex-mining:      true
+levelup-money-pex-woodcutting: true
+levelup-money-pex-excavation:  true
+levelup-money-pex-fishing:     true
+levelup-money-pex-herbalism:   true
+levelup-money-pex-acrobatics:  true
+levelup-money-pex-archery:     true
+levelup-money-pex-axes:        true
+levelup-money-pex-swords:      true
+levelup-money-pex-unarmed:     true
+levelup-money-pex-alchemy:     true
+levelup-money-pex-repair:      true
+levelup-money-pex-taming:      true
+levelup-money-pex-salvage:     true  # Will become part of Smithing in a future update. (https://mcmmo.org/wiki/Main_Page#Skills)
+levelup-money-pex-smelting:    true  # Will become part of Smithing in a future update. (https://mcmmo.org/wiki/Main_Page#Skills)
+
+
+
+
+
+
+#                                                    ___________
+#                                                   | MESSAGES |
+#                                                   -----------
+# PlaceholderAPI: Supported
+# Any PlaceholderApi placeholder is usable but you need to use /papi ecloud download <PluginName>. For more info check the PlaceholderApi documentation. (https://www.spigotmc.org/resources/placeholderapi.6245/)
+"messages-prefix":             "&8&l[&6MCMMO-A&8&l]&r"
+"levelup-message-mining":      "%vault_prefix%%player_name%%vault_suffix%, you gained &2%gained_ma_money%&r by leveling up your &2Mining&r skill."
+"levelup-message-woodcutting": "%vault_prefix%%player_name%%vault_suffix%, you gained &2%gained_ma_money%&r by leveling up your &2Woodcutting&r skill."
+"levelup-message-excavation":  "%vault_prefix%%player_name%%vault_suffix%, you gained &2%gained_ma_money%&r by leveling up your &2Excavation&r skill."
+"levelup-message-fishing":     "%vault_prefix%%player_name%%vault_suffix%, you gained &2%gained_ma_money%&r by leveling up your &2Fishing&r skill."
+"levelup-message-herbalism":   "%vault_prefix%%player_name%%vault_suffix%, you gained &2%gained_ma_money%&r by leveling up your &2Herbalism&r skill."
+"levelup-message-acrobatics":  "%vault_prefix%%player_name%%vault_suffix%, you gained &2%gained_ma_money%&r by leveling up your &2Acrobatics&r skill."
+"levelup-message-archery":     "%vault_prefix%%player_name%%vault_suffix%, you gained &2%gained_ma_money%&r by leveling up your &2Archery&r skill."
+"levelup-message-axes":        "%vault_prefix%%player_name%%vault_suffix%, you gained &2%gained_ma_money%&r by leveling up your skill with &2Axes&r."
+"levelup-message-swords":      "%vault_prefix%%player_name%%vault_suffix%, you gained &2%gained_ma_money%&r by leveling up your skill with &2Swords&r."
+"levelup-message-unarmed":     "%vault_prefix%%player_name%%vault_suffix%, you gained &2%gained_ma_money%&r by leveling up your &2Unarmed&r skill."
+"levelup-message-alchemy":     "%vault_prefix%%player_name%%vault_suffix%, you gained &2%gained_ma_money%&r by leveling up your &2Alchemy&r skill."
+"levelup-message-repair":      "%vault_prefix%%player_name%%vault_suffix%, you gained &2%gained_ma_money%&r by leveling up your &2Repair&r skill."
+"levelup-message-taming":      "%vault_prefix%%player_name%%vault_suffix%, you gained &2%gained_ma_money%&r by leveling up your &2Taming&r skill."
+"levelup-message-salvage":     "%vault_prefix%%player_name%%vault_suffix%, you gained &2%gained_ma_money%&r by leveling up your &2Salvage&r skill."  # Will become part of Smithing in a future update. (https://mcmmo.org/wiki/Main_Page#Skills)
+"levelup-message-smelting":    "%vault_prefix%%player_name%%vault_suffix%, you gained &2%gained_ma_money%&r by leveling up your &2Smelting&r skill."  # Will become part of Smithing in a future update. (https://mcmmo.org/wiki/Main_Page#Skills)

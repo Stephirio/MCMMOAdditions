@@ -1,0 +1,185 @@
+name: MCMMOAdditions
+version: ${project.version}
+main: stephirio.mcmmoadditions.Main
+api-version: 1.16
+loadbefore: [ mcMMO ]
+depend: [ Vault ]
+softdepend: [ PlaceholderAPI, mcMMO ]
+authors: [Stephirio]
+description: A simple plugin that adds some improvements to mcMMO
+commands:
+  Mcstats:
+    description: Shows player's stats
+    aliases: [ stats, levels, level, mmostats, skillstats, skillsstats ]
+  Mcmmoareload:
+    description: Reload the mcmmoa config files.
+    permission: mcmmoa.admin
+  permissions:
+    mcmmoa.*:
+      default: false
+      description: Gives all plugin's permissions.
+      children:
+        mcmmoa.all: true
+    mcmmoa.all:
+      default: false
+      description: Gives all plugin's permissions.
+      children:
+        mcmmoa.levelup.all: true
+        mcmmoa.admin: true
+        mcmmoa.stats: true
+    mcmmoa.admin:
+      default: false
+      description: Allows a player to execute mcmmoa commands related to admins.
+    mcmmoa.stats:
+      default: false
+      description: Gives to the player the stats permission.
+    mcmmoa.levelup.*:
+      default: false
+      description: Gives the player the permission to execute all the level-up related actions.
+      children:
+        mcmmoa.levelup.all: true
+    mcmmoa.levelup.all:
+      mcmmoa.levelup.*:
+        default: false
+        description: Gives the player the permission to execute all the level-up related actions.
+        children:
+          mcmmoa.levelup.money.all: true
+          mcmmoa.levelup.message.all: true
+    mcmmoa.levelup.money.*:
+      default: false
+      description: With this permission the player will be able to gain money by leveling up.
+      children:
+        mcmmoa.levelup.money.all: true
+    mcmmoa.levelup.money.all:
+      default: false
+      description: With this permission the player will be able to gain money by leveling up.
+      children:
+        mcmmoa.levelup.money.mining: true
+        mcmmoa.levelup.money.woodcutting: true
+        mcmmoa.levelup.money.herbalism: true
+        mcmmoa.levelup.money.excavation: true
+        mcmmoa.levelup.money.fishing: true
+        mcmmoa.levelup.money.acrobatics: true
+        mcmmoa.levelup.money.archery: true
+        mcmmoa.levelup.money.axes: true
+        mcmmoa.levelup.money.swords: true
+        mcmmoa.levelup.money.unarmed: true
+        mcmmoa.levelup.money.alchemy: true
+        mcmmoa.levelup.money.repair: true
+        mcmmoa.levelup.money.taming: true
+        mcmmoa.levelup.money.salvage: true
+        mcmmoa.levelup.money.smelting: true
+    mcmmoa.levelup.money.mining:
+      default: false
+      description: All the players that have this permission they will be able to gain money by leveling up their Mining skill.
+    mcmmoa.levelup.money.woodcutting:
+      default: false
+      description: All the players that have this permission they will be able to gain money by leveling up their Woodcutting skill.
+    mcmmoa.levelup.money.herbalism:
+      default: false
+      description: All the players that have this permission they will be able to gain money by leveling up their Herbalism skill.
+    mcmmoa.levelup.money.excavation:
+      default: false
+      description: All the players that have this permission they will be able to gain money by leveling up their Excavation skill.
+    mcmmoa.levelup.money.fishing:
+      default: false
+      description: All the players that have this permission they will be able to gain money by leveling up their Fishing skill.
+    mcmmoa.levelup.money.acrobatics:
+      default: false
+      description: All the players that have this permission they will be able to gain money by leveling up their Acrobatics skill.
+    mcmmoa.levelup.money.archery:
+      default: false
+      description: All the players that have this permission they will be able to gain money by leveling up their Archery skill.
+    mcmmoa.levelup.money.axes:
+      default: false
+      description: All the players that have this permission they will be able to gain money by leveling up their Axes skill.
+    mcmmoa.levelup.money.swords:
+      default: false
+      description: All the players that have this permission they will be able to gain money by leveling up their skill with Swords.
+    mcmmoa.levelup.money.unarmed:
+      default: false
+      description: All the players that have this permission they will be able to gain money by leveling up their Unarmed skill.
+    mcmmoa.levelup.money.alchemy:
+      default: false
+      description: All the players that have this permission they will be able to gain money by leveling up their Alchemy skill.
+    mcmmoa.levelup.money.repair:
+      default: false
+      description: All the players that have this permission they will be able to gain money by leveling up their Repair skill.
+    mcmmoa.levelup.money.taming:
+      default: false
+      description: All the players that have this permission they will be able to gain money by leveling up their Taming skill.
+    mcmmoa.levelup.money.salvage:
+      default: false
+      description: All the players that have this permission they will be able to gain money by leveling up their Salvage skill.
+    mcmmoa.levelup.money.smelting:
+      default: false
+      description: All the players that have this permission they will be able to gain money by leveling up their Smelting skill.
+    mcmmoa.levelup.money.message.*:
+      default: false
+      description: With this permission the player will be able to receive a message when gaining money by leveling up any skill.
+      children:
+        mcmmoa.levelup.money.message.all: true
+    mcmmoa.levelup.money.message.all:
+      default: false
+      description: With this permission the player will be able to receive a message when gaining money by leveling up any skill.
+      children:
+        mcmmoa.levelup.money.message.mining: true
+        mcmmoa.levelup.money.message.woodcutting: true
+        mcmmoa.levelup.money.message.herbalism: true
+        mcmmoa.levelup.money.message.excavation: true
+        mcmmoa.levelup.money.message.fishing: true
+        mcmmoa.levelup.money.message.acrobatics: true
+        mcmmoa.levelup.money.message.archery: true
+        mcmmoa.levelup.money.message.axes: true
+        mcmmoa.levelup.money.message.swords: true
+        mcmmoa.levelup.money.message.unarmed: true
+        mcmmoa.levelup.money.message.alchemy: true
+        mcmmoa.levelup.money.message.repair: true
+        mcmmoa.levelup.money.message.taming: true
+        mcmmoa.levelup.money.message.salvage: true
+        mcmmoa.levelup.money.message.smelting: true
+    mcmmoa.levelup.money.message.mining:
+      default: false
+      description: All the players that have this permission they will be able to receive a message leveling up their Mining skill and gaining money.
+    mcmmoa.levelup.money.message.woodcutting:
+      default: false
+      description: All the players that have this permission they will be able to receive a message leveling up their Woodcutting skill and gaining money.
+    mcmmoa.levelup.money.message.herbalism:
+      default: false
+      description: All the players that have this permission they will be able to receive a message leveling up their Herbalism skill and gaining money.
+    mcmmoa.levelup.money.message.excavation:
+      default: false
+      description: All the players that have this permission they will be able to receive a message leveling up their Excavation skill and gaining money.
+    mcmmoa.levelup.money.message.fishing:
+      default: false
+      description: All the players that have this permission they will be able to receive a message leveling up their Fishing skill and gaining money.
+    mcmmoa.levelup.money.message.acrobatics:
+      default: false
+      description: All the players that have this permission they will be able to receive a message leveling up their Acrobatics skill and gaining money.
+    mcmmoa.levelup.money.message.archery:
+      default: false
+      description: All the players that have this permission they will be able to receive a message leveling up their Archery skill and gaining money.
+    mcmmoa.levelup.money.message.axes:
+      default: false
+      description: All the players that have this permission they will be able to receive a message leveling up their skill with Axes and gaining money.
+    mcmmoa.levelup.money.message.swords:
+      default: false
+      description: All the players that have this permission they will be able to receive a message leveling up their skill with Swords and gaining money.
+    mcmmoa.levelup.money.message.unarmed:
+      default: false
+      description: All the players that have this permission they will be able to receive a message leveling up their Unarmed skill and gaining money.
+    mcmmoa.levelup.money.message.alchemy:
+      default: false
+      description: AAll the players that have this permission they will be able to receive a message leveling up their Alchemy skill and gaining money.
+    mcmmoa.levelup.money.message.repair:
+      default: false
+      description: All the players that have this permission they will be able to receive a message leveling up their Repair skill and gaining money.
+    mcmmoa.levelup.money.message.taming:
+      default: false
+      description: All the players that have this permission they will be able to receive a message leveling up their Taming skill and gaining money.
+    mcmmoa.levelup.money.message.salvage:
+      default: false
+      description: All the players that have this permission they will be able to receive a message leveling up their Salvage skill and gaining money.
+    mcmmoa.levelup.money.message.smelting:
+      default: false
+      description: All the players that have this permission they will be able to receive a message leveling up their Smelting skill and gaining money.
