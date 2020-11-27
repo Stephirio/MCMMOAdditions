@@ -9,6 +9,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -108,6 +109,7 @@ public class Stats implements CommandExecutor {
                                 .getList("locked-skill-item-lore")))
                             lore.add(plugin.placeholderColors(player, (String) loreLine));
                         meta.setLore(lore);
+                        meta.addEnchant(Enchantment.FIRE_ASPECT, 1, true);
                         item.setItemMeta(meta);
                         gui.setItem(getConfig().getInt(skill.toLowerCase() + "-item-position"), item);
                     } else {
@@ -133,7 +135,7 @@ public class Stats implements CommandExecutor {
                 for (String skill : SkillAPI.getSkills()) {
                     if (ExperienceAPI.getLevel(player, PrimarySkillType.valueOf(skill)) > 0 &&
                             !SkillAPI.getChildSkills().contains(skill)) {
-                        Integer playerSLevel = ExperienceAPI.getLevel(player, skill);
+                        Integer playerSLevel = ExperienceAPI.getLevel(player, PrimarySkillType.valueOf(skill));
                         Integer playerSXp = ExperienceAPI.getXP(player, skill);
                         Integer playerSNXp = ExperienceAPI.getXPToNextLevel(player, skill);
                         Integer playerSRXp = ExperienceAPI.getXPRemaining(player, skill);

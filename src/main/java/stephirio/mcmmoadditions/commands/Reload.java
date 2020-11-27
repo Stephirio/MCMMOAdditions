@@ -13,29 +13,18 @@ import stephirio.mcmmoadditions.Main;
 /** Reloads the configuration files of the plugin.*/
 public class Reload implements CommandExecutor {
 
-
-
     public final Main plugin;
-
-
-
     public Reload(Main plugin) { this.plugin = plugin; }  // Constructor
-
-
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label,
                              @NotNull String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            if (args.length > 0) {
-                if (args[0].equalsIgnoreCase("reload")) {
-                    plugin.stats.reloadConfig();
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin
-                            .getConfig().getString("messages-prefix") + " The plugin has been reloaded."));
-                    System.out.println("[MCMMO-A] The plugin has been reloaded.");
-                }
-            }
+            (new Stats(plugin)).reloadConfig();  // stats related configuration
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin
+                    .getConfig().getString("messages-prefix") + ChatColor.GREEN + " The configuration has been reloaded."));
+            System.out.println(ChatColor.GREEN + "[MCMMO-A] The configuration has been reloaded");
         }
         return false;
     }

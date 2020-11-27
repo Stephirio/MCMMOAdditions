@@ -16,12 +16,8 @@ import java.util.Scanner;
  */
 public class UpdateChecker {
 
-
-
     private final Main plugin;
     private final int resourceId;
-
-
 
     public UpdateChecker(Main plugin, int resourceId) {
         this.plugin  = plugin;

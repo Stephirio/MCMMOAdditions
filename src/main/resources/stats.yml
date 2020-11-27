@@ -127,6 +127,7 @@ alchemy-item-lore:
   - '&2Level&8: &6%mcmmo_level_alchemy%'
 
 
+
 #                                                    _______
 #                                                   | TEXT |
 #                                                   -------
@@ -143,7 +144,7 @@ alchemy-item-lore:
 
 message-template:
   - '&6&l%mcmmoa_skill_name%:&r'
-  - '&2Level: &6&%mcmmoa_skill_level%'
+  - '&2Level: &6%mcmmoa_skill_level%'
   - '&2XP: &8(&6%mcmmoa_skill_xp% &8/ &6%mcmmoa_needed_skill_xp%&8)'
   - '&6%mcmmoa_remaining_skill_xp% &2XP remaining to level &6%mcmmoa_next_level%'
   - ''

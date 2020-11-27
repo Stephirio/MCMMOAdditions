@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import stephirio.mcmmoadditions.Main;
+import stephirio.mcmmoadditions.commands.Stats;
 
 /** Handler of the main menus of the plugin.
  * @see stephirio.mcmmoadditions.commands.Stats */
@@ -14,11 +15,14 @@ public class MenuHandler implements Listener {
 
     public MenuHandler(Main plugin) { this.plugin = plugin; } // Constructor
 
+
     @EventHandler
     public void onMenuClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
-        if (event.getView().getTitle().equalsIgnoreCase(plugin.placeholderColors(player, plugin.stats.getConfig()
-                .getString("gui-title")))) player.closeInventory();
+        if (event.getView().getTitle().equals(plugin.placeholderColors(player, (new Stats(plugin)).getConfig().getString("gui-title")))) {
+            if (event.getView().getTitle().equalsIgnoreCase(plugin.placeholderColors(player, plugin.stats.getConfig()
+                    .getString("gui-title")))) player.closeInventory();
+        }
     }
 
 }

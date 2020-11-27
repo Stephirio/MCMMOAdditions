@@ -26,6 +26,7 @@ public final class Main extends JavaPlugin {
     public Stats stats;
 
 
+
     @Override
     public void onEnable() {
         saveDefaultConfig();
