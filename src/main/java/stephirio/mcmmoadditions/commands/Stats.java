@@ -4,6 +4,7 @@ import com.gmail.nossr50.api.ExperienceAPI;
 import com.gmail.nossr50.api.SkillAPI;
 import com.gmail.nossr50.datatypes.skills.PrimarySkillType;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,6 +13,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import stephirio.mcmmoadditions.Main;
@@ -31,6 +33,7 @@ public class Stats implements CommandExecutor {
     private final Main plugin;
     private File configFile = null;
     private FileConfiguration dataConfig = null;
+    private String configver = "Beta 1.3.1";
 
 
 
@@ -85,9 +88,27 @@ public class Stats implements CommandExecutor {
 
 
 
+    /*public void checkMessages() {
+        Path file = Paths.get(pathMessages);
+        try {
+            String text = new String(Files.readAllBytes(file));
+            if(!text.contains("[The new path or value you created. Imagine that are called 'new-message:']")) {
+                getMessages().set("Messages.new-message", "asdasdasdasdasd");
+                saveMessages();
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    } */
+
+
+
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        System.out.println("lol");
         if (sender instanceof Player) {
             Player player = (Player) sender;
             // GUI
@@ -109,7 +130,10 @@ public class Stats implements CommandExecutor {
                                 .getList("locked-skill-item-lore")))
                             lore.add(plugin.placeholderColors(player, (String) loreLine));
                         meta.setLore(lore);
-                        meta.addEnchant(Enchantment.FIRE_ASPECT, 1, true);
+                        if (getConfig().getBoolean("locked-item-enchanted")) {
+                            meta.addEnchant(Enchantment.FIRE_ASPECT, 1, true);
+                            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                        }
                         item.setItemMeta(meta);
                         gui.setItem(getConfig().getInt(skill.toLowerCase() + "-item-position"), item);
                     } else {
@@ -120,10 +144,16 @@ public class Stats implements CommandExecutor {
                         meta.setDisplayName(plugin.placeholderColors(player, getConfig().getString(
                                 skill.toLowerCase() + "-item-name")));
                         ArrayList<String> lore = new ArrayList<>();
+                        lore.add(plugin.convertToInvisibleString(skill));
                         for (Object loreLine : Objects.requireNonNull(getConfig().getList(skill.toLowerCase() +
                                 "-item-lore")))
                             lore.add(plugin.placeholderColors(player, (String) loreLine));
                         meta.setLore(lore);
+                        if (getConfig().getBoolean("unlocked-skills-enchanted") ||
+                                getConfig().getBoolean(skill.toLowerCase() + "-item-enchanted")) {
+                            meta.addEnchant(Enchantment.FIRE_ASPECT, 1, true);
+                            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                        }
                         item.setItemMeta(meta);
                         gui.setItem(getConfig().getInt(skill.toLowerCase() + "-item-position"), item);
                     }

@@ -11,6 +11,8 @@ import stephirio.mcmmoadditions.commands.Stats;
 import stephirio.mcmmoadditions.events.LevelUp;
 import stephirio.mcmmoadditions.events.MenuHandler;
 import stephirio.mcmmoadditions.events.UpdateChecker;
+import me.clip.placeholderapi.expansion.cloud.CloudExpansion;
+import me.clip.placeholderapi.PlaceholderAPIPlugin;
 
 import java.util.Objects;
 import java.util.logging.Logger;
@@ -22,15 +24,18 @@ public final class Main extends JavaPlugin {
 
     public static final Logger log = Logger.getLogger("Minecraft");
     public static Economy econ = null;
-    private Integer pluginID = 472449;
+    private Integer pluginID = 85779;
     public Stats stats;
 
 
 
     @Override
     public void onEnable() {
+        getConfig().options().copyDefaults(true);
         saveDefaultConfig();
+        reloadConfig();
         this.stats = new Stats(this);
+        stats.getConfig().options().copyDefaults(true);
         stats.saveDefaultConfig();
         stats.reloadConfig();
         if (!setupEconomy()) {
@@ -94,5 +99,11 @@ public final class Main extends JavaPlugin {
      * @return Material */
     public Material materialParser(String material) {
         return Material.valueOf(material.toUpperCase().replace(' ', '_').replace('-', '_'));
+    }
+
+    public String convertToInvisibleString(String s) {
+        StringBuilder hidden = new StringBuilder();
+        for (char c : s.toCharArray()) hidden.append(ChatColor.COLOR_CHAR + "").append(c);
+        return hidden.toString();
     }
 }

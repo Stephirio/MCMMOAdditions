@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import stephirio.mcmmoadditions.Main;
 
+import java.util.ArrayList;
 
 
 /** Reloads the configuration files of the plugin.*/
