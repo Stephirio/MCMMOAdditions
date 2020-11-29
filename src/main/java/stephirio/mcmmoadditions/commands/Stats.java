@@ -106,6 +106,55 @@ public class Stats implements CommandExecutor {
 
 
 
+    public void openGui(Player player) {
+        Inventory gui = Bukkit.createInventory(player, getConfig().getInt("gui-size"),
+                plugin.placeholderColors(player, getConfig().getString("gui-title")));
+        for (String skill : SkillAPI.getSkills()) {
+            if (ExperienceAPI.getLevel(player, PrimarySkillType.valueOf(skill)) == 0) {
+                ItemStack item = new ItemStack(plugin.materialParser(Objects.requireNonNull(getConfig()
+                        .getString("locked-skill-item"))), 1);
+                ItemMeta meta = item.getItemMeta();
+                assert meta != null;
+                meta.setDisplayName(plugin.placeholderColors(player, getConfig()
+                        .getString("locked-skill-item-name")));
+                ArrayList<String> lore = new ArrayList<>();
+                for (Object loreLine : Objects.requireNonNull(getConfig()
+                        .getList("locked-skill-item-lore")))
+                    lore.add(plugin.placeholderColors(player, (String) loreLine));
+                meta.setLore(lore);
+                if (getConfig().getBoolean("locked-item-enchanted")) {
+                    meta.addEnchant(Enchantment.FIRE_ASPECT, 1, true);
+                    meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                }
+                item.setItemMeta(meta);
+                gui.setItem(getConfig().getInt(skill.toLowerCase() + "-item-position"), item);
+            } else {
+                ItemStack item = new ItemStack(plugin.materialParser(Objects.requireNonNull(getConfig()
+                        .getString(skill.toLowerCase() + "-item"))), 1);
+                ItemMeta meta = item.getItemMeta();
+                assert meta != null;
+                meta.setDisplayName(plugin.placeholderColors(player, getConfig().getString(
+                        skill.toLowerCase() + "-item-name")));
+                ArrayList<String> lore = new ArrayList<>();
+                lore.add(plugin.convertToInvisibleString(skill));
+                for (Object loreLine : Objects.requireNonNull(getConfig().getList(skill.toLowerCase() +
+                        "-item-lore")))
+                    lore.add(plugin.placeholderColors(player, (String) loreLine));
+                meta.setLore(lore);
+                if (getConfig().getBoolean("unlocked-skills-enchanted") ||
+                        getConfig().getBoolean(skill.toLowerCase() + "-item-enchanted")) {
+                    meta.addEnchant(Enchantment.FIRE_ASPECT, 1, true);
+                    meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                }
+                item.setItemMeta(meta);
+                gui.setItem(getConfig().getInt(skill.toLowerCase() + "-item-position"), item);
+            }
+        }
+        player.openInventory(gui);
+    }
+
+
+
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -115,50 +164,7 @@ public class Stats implements CommandExecutor {
             if (Objects.requireNonNull(getConfig().getString("mode")).equalsIgnoreCase("default") ||
                     Objects.requireNonNull(getConfig()
                     .getString("mode")).equalsIgnoreCase("gui")) {
-                Inventory gui = Bukkit.createInventory(player, getConfig().getInt("gui-size"),
-                        plugin.placeholderColors(player, getConfig().getString("gui-title")));
-                for (String skill : SkillAPI.getSkills()) {
-                    if (ExperienceAPI.getLevel(player, PrimarySkillType.valueOf(skill)) == 0) {
-                        ItemStack item = new ItemStack(plugin.materialParser(Objects.requireNonNull(getConfig()
-                                .getString("locked-skill-item"))), 1);
-                        ItemMeta meta = item.getItemMeta();
-                        assert meta != null;
-                        meta.setDisplayName(plugin.placeholderColors(player, getConfig()
-                                .getString("locked-skill-item-name")));
-                        ArrayList<String> lore = new ArrayList<>();
-                        for (Object loreLine : Objects.requireNonNull(getConfig()
-                                .getList("locked-skill-item-lore")))
-                            lore.add(plugin.placeholderColors(player, (String) loreLine));
-                        meta.setLore(lore);
-                        if (getConfig().getBoolean("locked-item-enchanted")) {
-                            meta.addEnchant(Enchantment.FIRE_ASPECT, 1, true);
-                            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-                        }
-                        item.setItemMeta(meta);
-                        gui.setItem(getConfig().getInt(skill.toLowerCase() + "-item-position"), item);
-                    } else {
-                        ItemStack item = new ItemStack(plugin.materialParser(Objects.requireNonNull(getConfig()
-                                .getString(skill.toLowerCase() + "-item"))), 1);
-                        ItemMeta meta = item.getItemMeta();
-                        assert meta != null;
-                        meta.setDisplayName(plugin.placeholderColors(player, getConfig().getString(
-                                skill.toLowerCase() + "-item-name")));
-                        ArrayList<String> lore = new ArrayList<>();
-                        lore.add(plugin.convertToInvisibleString(skill));
-                        for (Object loreLine : Objects.requireNonNull(getConfig().getList(skill.toLowerCase() +
-                                "-item-lore")))
-                            lore.add(plugin.placeholderColors(player, (String) loreLine));
-                        meta.setLore(lore);
-                        if (getConfig().getBoolean("unlocked-skills-enchanted") ||
-                                getConfig().getBoolean(skill.toLowerCase() + "-item-enchanted")) {
-                            meta.addEnchant(Enchantment.FIRE_ASPECT, 1, true);
-                            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-                        }
-                        item.setItemMeta(meta);
-                        gui.setItem(getConfig().getInt(skill.toLowerCase() + "-item-position"), item);
-                    }
-                }
-                player.openInventory(gui);
+                openGui(player);
             // TEXT
             } else if (Objects.requireNonNull(getConfig().getString("mode"))
                     .equalsIgnoreCase("text")) {
