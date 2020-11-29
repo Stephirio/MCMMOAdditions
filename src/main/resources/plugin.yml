@@ -183,3 +183,74 @@ commands:
     mcmmoa.levelup.money.message.smelting:
       default: false
       description: All the players that have this permission they will be able to receive a message leveling up their Smelting skill and gaining money.
+
+  mcmmoa.gui.itemrightclick.*:
+    default: false
+    description: With this permission the players are allowed to open all the GUIs by rightclicking on pickaxes, shovels, axes etc.
+    children:
+      mcmmoa.gui.itemrightclick.all: true
+  mcmmoa.gui.itemrightclick.all:
+    default: false
+    description: With this permission the players are allowed to open all the GUIs by rightclicking on pickaxes, shovels, axes etc.
+    children:
+    mcmmoa.gui.itemrightclick.mining: true
+    mcmmoa.gui.itemrightclick.woodcutting: true
+    mcmmoa.gui.itemrightclick.herbalism: true
+    mcmmoa.gui.itemrightclick.excavation: true
+    mcmmoa.gui.itemrightclick.fishing: true
+    mcmmoa.gui.itemrightclick.acrobatics: true
+    mcmmoa.gui.itemrightclick.archery: true
+    mcmmoa.gui.itemrightclick.axes: true
+    mcmmoa.gui.itemrightclick.swords: true
+    mcmmoa.gui.itemrightclick.unarmed: true
+    mcmmoa.gui.itemrightclick.alchemy: true
+    mcmmoa.gui.itemrightclick.repair: true
+    mcmmoa.gui.itemrightclick.smelting: true
+    mcmmoa.gui.itemrightclick.salvage: true
+    mcmmoa.gui.itemrightclick.taming: true
+  mcmmoa.gui.itemrightclick.mining:
+    default: false
+    description: With this permission players will be able to open the skill stats gui menu by shifting and right clicking in the air with a pickaxe in main hand.
+  mcmmoa.gui.itemrightclick.woodcutting:
+    default: false
+    description: With this permission players will be able to open the skill stats gui menu by shifting and right clicking in the air with a wooden, iron, golden or iron axe in main hand.
+  mcmmoa.gui.itemrightclick.herbalism:
+    default: false
+    description: With this permission players will be able to open the skill stats gui menu by shifting and right clicking in the air with grass or seeds in main hand.
+  mcmmoa.gui.itemrightclick.excavation:
+    default: false
+    description: With this permission players will be able to open the skill stats gui menu by shifting and right clicking in the air with a shovel in main hand.
+  mcmmoa.gui.itemrightclick.fishing:
+    default: false
+    description: With this permission players will be able to open the skill stats gui menu by shifting and right clicking in the air with a fishing rod in main hand.
+  mcmmoa.gui.itemrightclick.acrobatics:
+    default: false
+    description: With this permission players will be able to open the skill stats gui menu by shifting and right clicking in the air with a pair of boots in main hand.
+  mcmmoa.gui.itemrightclick.archery:
+    default: false
+    description: With this permission players will be able to open the skill stats gui menu by shifting and right clicking in the air with an arrow in main hand.
+  mcmmoa.gui.itemrightclick.axes:
+    default: false
+    description: With this permission players will be able to open the skill stats gui menu by shifting and right clicking in the air with a diamond axe in main hand.
+  mcmmoa.gui.itemrightclick.swords:
+    default: false
+    description: With this permission players will be able to open the skill stats gui menu by shifting and right clicking in the air with a sword in main hand.
+  mcmmoa.gui.itemrightclick.unarmed:
+    default: false
+    description: With this permission players will be able to open the main stats gui menu by shifting and right clicking in the air with nothing in main hand.
+  mcmmoa.gui.itemrightclick.alchemy:
+    default: false
+    description: With this permission players will be able to open the stats gui menu by shifting and right clicking in the air with an empty bottle in main hand.
+  mcmmoa.gui.itemrightclick.repair:
+    default: false
+    description: With this permission players will be able to open the stats gui menu by shifting and right clicking in the air with an anvil or an iron block in main hand.
+  mcmmoa.gui.itemrightclick.smelting:
+    default: false
+    description: With this permission players will be able to open the stats gui menu by shifting and right clicking in the air with an ingot or a furnace in main hand.
+  mcmmoa.gui.itemrightclick.salvage:
+    default: false
+    description: With this permission players will be able to open the stats gui menu by shifting and right clicking in the air with a golden helmet in main hand.
+  mcmmoa.gui.itemrightclick.taming:
+    default: false
+    description: With this permission players will be able to open the stats gui menu by shifting and right clicking in the air with a bone in main hand.
+

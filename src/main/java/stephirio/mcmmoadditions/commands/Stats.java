@@ -8,6 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
@@ -23,6 +24,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
 
@@ -106,7 +109,7 @@ public class Stats implements CommandExecutor {
 
 
 
-    public void openGui(Player player) {
+    public void openMainGui(Player player) {
         Inventory gui = Bukkit.createInventory(player, getConfig().getInt("gui-size"),
                 plugin.placeholderColors(player, getConfig().getString("gui-title")));
         for (String skill : SkillAPI.getSkills()) {
@@ -154,6 +157,68 @@ public class Stats implements CommandExecutor {
     }
 
 
+    public void openSkillGui(Player player, ItemStack clickeditem) {
+        if (clickeditem != null) {
+            Map<String, String> keys = new HashMap<String, String>();
+            keys.put("mIrnmIrnmG", "mining");
+            keys.put("aTIcS", "acrobatics");
+            keys.put("SelTIelnG", "smeling");
+            keys.put("HalISalm", "herbalism");
+            keys.put("cHemY", "alchemy");
+            keys.put("cHrY", "archery");
+            keys.put("aS", "axes");
+            keys.put("eVeTIe", "excavation");
+            keys.put("fISHIfnG", "fishing");
+            keys.put("ePaI", "repair");
+            keys.put("SalVaGe", "salvage");
+            keys.put("SWdS", "swords");
+            keys.put("Ud", "unarmed");
+            keys.put("TamIanmG", "taming");
+            keys.put("WcUTTIcnG", "woodcutting");
+            String codified = clickeditem.getItemMeta().getLore().get(0).replace(
+                    String.valueOf(ChatColor.COLOR_CHAR), "");
+
+            ConfigurationSection section = plugin.stats.getConfig().getConfigurationSection(
+                    keys.get(codified) + "-gui");
+
+            Inventory gui = Bukkit.createInventory(player, section.getInt("size"), clickeditem
+                    .getItemMeta().getDisplayName() +
+                    plugin.placeholderColors(player, section.getString("title")));
+
+            for (String key : section.getKeys(false)) {
+                if (!key.equals("title") && !key.equals("size")) {
+                    ConfigurationSection iteminfo = section.getConfigurationSection(key);
+                    ItemStack item = new ItemStack(plugin.materialParser(iteminfo.getString("item")),
+                            1);
+                    ItemMeta meta = item.getItemMeta();
+                    meta.setDisplayName(plugin.placeholderColors(player, iteminfo.getString("name")));
+                    ArrayList<String> lore = new ArrayList<>();
+                    for (Object loreLine : Objects.requireNonNull(iteminfo.getList("lore")))
+                        lore.add(plugin.placeholderColors(player, (String) loreLine));
+                    meta.setLore(lore);
+                    item.setItemMeta(meta);
+                    gui.setItem(iteminfo.getInt("position"), item);
+                }
+            }
+
+            ConfigurationSection back_button = plugin.stats.getConfig()
+                    .getConfigurationSection("go-back-button");
+            ItemStack item = new ItemStack(plugin.materialParser(back_button.getString("item")));
+            ItemMeta meta = item.getItemMeta();
+            ArrayList<String> lore = new ArrayList<>();
+            lore.add(plugin.convertToInvisibleString("GOTOSTATSPG1"));
+            for (Object loreList : back_button.getList("lore"))
+                lore.add(plugin.placeholderColors(player, (String) loreList));
+            meta.setDisplayName(plugin.placeholderColors(player, back_button.getString("name")));
+            meta.setLore(lore);
+            item.setItemMeta(meta);
+            gui.setItem(section.getInt("size") - 1, item);
+
+            player.openInventory(gui);
+        }
+    }
+
+
 
 
     @Override
@@ -164,7 +229,7 @@ public class Stats implements CommandExecutor {
             if (Objects.requireNonNull(getConfig().getString("mode")).equalsIgnoreCase("default") ||
                     Objects.requireNonNull(getConfig()
                     .getString("mode")).equalsIgnoreCase("gui")) {
-                openGui(player);
+                openMainGui(player);
             // TEXT
             } else if (Objects.requireNonNull(getConfig().getString("mode"))
                     .equalsIgnoreCase("text")) {

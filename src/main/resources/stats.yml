@@ -157,9 +157,10 @@ alchemy-item-lore:
 go-back-button:
   name: '&6&2Go back'
   item: barrier
-  position: default
+  position: default  # By default it's the last slot of the GUI.
   lore:
-    - '&2Click this to go back to the stats menu.'
+    - '&2Click this to go back'
+    - 'to the stats menu.'
 
 mining-gui:
   title: '&r &2&lstatistics'
@@ -174,6 +175,17 @@ mining-gui:
       - '&2to level up.'
       - ' '
       - '&2You are level &6%mcmmo_level_mining%&2.'
+  broken-blocks:
+    position: 3
+    item: iron-pickaxe
+    name: '&6&lMined blocks'
+    lore:
+      - '&6%statistic_mine_block% &2mined blocks.'
+      - '&6%statistic_mine_block:COAL_ORE% &2of Coal Ore,'
+      - '&6%statistic_mine_block:IRON_ORE% &2of Iron Ore,'
+      - '&6%statistic_mine_block:GOLD_ORE% &2of Gold Ore,'
+      - '&6%statistic_mine_block:DIAMOND_ORE% &2of Diamond Ore,'
+
 
 woodcutting-gui:
   title: '&r &2&lstatistics'
