@@ -13,6 +13,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -90,25 +92,10 @@ public class Stats implements CommandExecutor {
     }
 
 
-
-    /*public void checkMessages() {
-        Path file = Paths.get(pathMessages);
-        try {
-            String text = new String(Files.readAllBytes(file));
-            if(!text.contains("[The new path or value you created. Imagine that are called 'new-message:']")) {
-                getMessages().set("Messages.new-message", "asdasdasdasdasd");
-                saveMessages();
-            }
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    } */
-
-
-
+    /** A method that opens the main GUI of the Stats.
+     * @param player The player of which you want to get information from.
+     * @see Stats#openSkillGui(Player, ItemStack)
+     * @see Stats#openSkillGuiByName(Player, String) */
     public void openMainGui(Player player) {
         Inventory gui = Bukkit.createInventory(player, getConfig().getInt("gui-size"),
                 plugin.placeholderColors(player, getConfig().getString("gui-title")));
@@ -121,9 +108,11 @@ public class Stats implements CommandExecutor {
                 meta.setDisplayName(plugin.placeholderColors(player, getConfig()
                         .getString("locked-skill-item-name")));
                 ArrayList<String> lore = new ArrayList<>();
-                for (Object loreLine : Objects.requireNonNull(getConfig()
-                        .getList("locked-skill-item-lore")))
-                    lore.add(plugin.placeholderColors(player, (String) loreLine));
+                if (getConfig().getList("locked-skill-item-lore") != null) {
+                    for (Object loreLine : Objects.requireNonNull(getConfig()
+                            .getList("locked-skill-item-lore")))
+                        lore.add(plugin.placeholderColors(player, (String) loreLine));
+                }
                 meta.setLore(lore);
                 if (getConfig().getBoolean("locked-item-enchanted")) {
                     meta.addEnchant(Enchantment.FIRE_ASPECT, 1, true);
@@ -140,9 +129,11 @@ public class Stats implements CommandExecutor {
                         skill.toLowerCase() + "-item-name")));
                 ArrayList<String> lore = new ArrayList<>();
                 lore.add(plugin.convertToInvisibleString(skill));
-                for (Object loreLine : Objects.requireNonNull(getConfig().getList(skill.toLowerCase() +
-                        "-item-lore")))
-                    lore.add(plugin.placeholderColors(player, (String) loreLine));
+                if (getConfig().getList(skill.toLowerCase() + "-item-lore") != null) {
+                    for (Object loreLine : Objects.requireNonNull(getConfig().getList(skill.toLowerCase() +
+                            "-item-lore")))
+                        lore.add(plugin.placeholderColors(player, (String) loreLine));
+                }
                 meta.setLore(lore);
                 if (getConfig().getBoolean("unlocked-skills-enchanted") ||
                         getConfig().getBoolean(skill.toLowerCase() + "-item-enchanted")) {
@@ -157,12 +148,19 @@ public class Stats implements CommandExecutor {
     }
 
 
+    /** Opens the GUI showing player's information related to a certain specified skill. The skill's name is extracted
+     * from a codified string in the item lore.
+     * @param player The player to get the information of.
+     * @param clickeditem Gets the item the player clicked.
+     * @see stephirio.mcmmoadditions.events.MenuHandler#onMenuClick(InventoryClickEvent)
+     * @see Stats#openSkillGuiByName(Player, String)
+     * @see Stats#openMainGui(Player)  */
     public void openSkillGui(Player player, ItemStack clickeditem) {
         if (clickeditem != null) {
             Map<String, String> keys = new HashMap<String, String>();
             keys.put("mIrnmIrnmG", "mining");
             keys.put("aTIcS", "acrobatics");
-            keys.put("SelTIelnG", "smeling");
+            keys.put("SelTIelnG", "smelting");
             keys.put("HalISalm", "herbalism");
             keys.put("cHemY", "alchemy");
             keys.put("cHrY", "archery");
@@ -175,15 +173,17 @@ public class Stats implements CommandExecutor {
             keys.put("Ud", "unarmed");
             keys.put("TamIanmG", "taming");
             keys.put("WcUTTIcnG", "woodcutting");
+
             String codified = clickeditem.getItemMeta().getLore().get(0).replace(
                     String.valueOf(ChatColor.COLOR_CHAR), "");
 
             ConfigurationSection section = plugin.stats.getConfig().getConfigurationSection(
                     keys.get(codified) + "-gui");
 
-            Inventory gui = Bukkit.createInventory(player, section.getInt("size"), clickeditem
-                    .getItemMeta().getDisplayName() +
-                    plugin.placeholderColors(player, section.getString("title")));
+            Inventory gui = Bukkit.createInventory(
+                    player,
+                    section.getInt("size"),
+                    clickeditem.getItemMeta().getDisplayName() + plugin.placeholderColors(player, section.getString("title")));
 
             for (String key : section.getKeys(false)) {
                 if (!key.equals("title") && !key.equals("size")) {
@@ -193,9 +193,11 @@ public class Stats implements CommandExecutor {
                     ItemMeta meta = item.getItemMeta();
                     meta.setDisplayName(plugin.placeholderColors(player, iteminfo.getString("name")));
                     ArrayList<String> lore = new ArrayList<>();
-                    for (Object loreLine : Objects.requireNonNull(iteminfo.getList("lore")))
-                        lore.add(plugin.placeholderColors(player, (String) loreLine));
-                    meta.setLore(lore);
+                    if (iteminfo.getList("lore") != null) {
+                        for (Object loreLine : Objects.requireNonNull(iteminfo.getList("lore")))
+                            lore.add(plugin.placeholderColors(player, (String) loreLine));
+                        meta.setLore(lore);
+                    }
                     item.setItemMeta(meta);
                     gui.setItem(iteminfo.getInt("position"), item);
                 }
@@ -207,8 +209,10 @@ public class Stats implements CommandExecutor {
             ItemMeta meta = item.getItemMeta();
             ArrayList<String> lore = new ArrayList<>();
             lore.add(plugin.convertToInvisibleString("GOTOSTATSPG1"));
-            for (Object loreList : back_button.getList("lore"))
-                lore.add(plugin.placeholderColors(player, (String) loreList));
+            if (back_button.getList("lore") != null) {
+                for (Object loreList : back_button.getList("lore"))
+                    lore.add(plugin.placeholderColors(player, (String) loreList));
+            }
             meta.setDisplayName(plugin.placeholderColors(player, back_button.getString("name")));
             meta.setLore(lore);
             item.setItemMeta(meta);
@@ -218,6 +222,52 @@ public class Stats implements CommandExecutor {
         }
     }
 
+
+    /** This opens the skill GUI using the name of the skill. Useful when the item has no cryptographed lore string
+     * @param player The player to get information from.
+     * @param skillname The name of the skill to get more precise information.
+     * @see Stats#openMainGui(Player)
+     * @see Stats#openSkillGui(Player, ItemStack)
+     * @see stephirio.mcmmoadditions.events.MenuHandler#rightClickCrouchedItemMenu(PlayerInteractEvent)   */
+    public void openSkillGuiByName(Player player, String skillname) {
+        skillname = skillname.toLowerCase();
+        ConfigurationSection section = plugin.stats.getConfig().getConfigurationSection(skillname + "-gui");
+        Inventory gui = Bukkit.createInventory(player, section.getInt("size"), plugin.placeholderColors(player,
+                plugin.stats.getConfig().getString(skillname + "-item-name")) +
+                plugin.placeholderColors(player, section.getString("title")));
+        for (String key : section.getKeys(false)) {
+            if (!key.equals("title") && !key.equals("size")) {
+                ConfigurationSection iteminfo = section.getConfigurationSection(key);
+                ItemStack item = new ItemStack(plugin.materialParser(iteminfo.getString("item")),
+                        1);
+                ItemMeta meta = item.getItemMeta();
+                meta.setDisplayName(plugin.placeholderColors(player, iteminfo.getString("name")));
+                ArrayList<String> lore = new ArrayList<>();
+                if (iteminfo.getList("lore") != null) {
+                    for (Object loreLine : iteminfo.getList("lore"))
+                        lore.add(plugin.placeholderColors(player, (String) loreLine));
+                    meta.setLore(lore);
+                }
+                item.setItemMeta(meta);
+                gui.setItem(iteminfo.getInt("position"), item);
+            }
+        }
+        ConfigurationSection back_button = plugin.stats.getConfig()
+                .getConfigurationSection("close-button");
+        ItemStack backitem = new ItemStack(plugin.materialParser(back_button.getString("item")));
+        ItemMeta backmeta = backitem.getItemMeta();
+        ArrayList<String> backlore = new ArrayList<>();
+        backlore.add(plugin.convertToInvisibleString("CLOSE"));
+        if (back_button.getList("lore") != null) {
+            for (Object backloreList : back_button.getList("lore"))
+                backlore.add(plugin.placeholderColors(player, (String) backloreList));
+            backmeta.setLore(backlore);
+        }
+        backmeta.setDisplayName(plugin.placeholderColors(player, back_button.getString("name")));
+        backitem.setItemMeta(backmeta);
+        gui.setItem(section.getInt("size") - 1, backitem);
+        player.openInventory(gui);
+    }
 
 
 

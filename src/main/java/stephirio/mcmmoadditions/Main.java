@@ -38,6 +38,9 @@ public final class Main extends JavaPlugin {
         stats.getConfig().options().copyDefaults(true);
         stats.saveDefaultConfig();
         stats.reloadConfig();
+        if (!stats.getConfig().getString("version").equals("Beta 1.4")) {
+            log.warning("Your stats.yml configuration file is outdated. Please use the new one: https://github.com/Stephirio/MCMMOAdditions/blob/master/src/main/resources/stats.yml");
+        }
         if (!setupEconomy()) {
             log.severe(String.format("[%s] - Not able to detect Vault.", getDescription().getName()));
         }
@@ -50,7 +53,7 @@ public final class Main extends JavaPlugin {
                 System.out.println("[MCMMO-A] Plugin is up to date.");
             } else {
                 log.warning("A new version of MCMMOAdditions is available. Download it now at " +
-                        "https://www.spigotmc.org/threads/mcmmoadditions.472449/");
+                        "https://www.spigotmc.org/threads/mcmmoadditions.85779/");
             }
         });
     }

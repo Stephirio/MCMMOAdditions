@@ -1,8 +1,9 @@
 # In this file it's possible to customize the appearance of the stats GUI and message. Also it is possible to select which one to show.
+Version: 1.1
 
 
 
-version: Beta 1.3.1  # Do not change this value. It is used by the plugin which updates it automatically. Changing it will make the plugin unstable or not working.
+version: Beta 1.4  # Do not change this value. It is used by the plugin which updates it automatically. Changing it will make the plugin unstable or not working.
 
 
 
@@ -25,7 +26,7 @@ locked-skill-item-lore:
   - '&6You haven''t unlocked'
   - '&6This unknown skill yet'
 
-unlocked-skills-enchanted: true  # True if you want all the unlocked skills items to be enchanted (enchant glow)
+unlocked-skills-enchanted: false  # True if you want all the unlocked skills items to be enchanted (enchant glow)
 
 mining-item: iron pickaxe
 mining-item-position: 22
@@ -152,31 +153,41 @@ alchemy-item-lore:
 #                                                    ______________
 #                                                   | GUI - PAGES |
 #                                                   --------------
+# PlaceholderAPI: supported
+# Here you can edit how each skill GUI page looks.
 
 
 go-back-button:
-  name: '&6&2Go back'
+  name: '&6&lGo back'
   item: barrier
   position: default  # By default it's the last slot of the GUI.
   lore:
     - '&2Click this to go back'
-    - 'to the stats menu.'
+    - '&2to the stats menu.'
+
+close-button:
+  name: '&4&lClose'
+  item: barrier
+  position: default  # By default it's the last slot of the GUI.
+  lore:
+    - '&2Click this to close'
+    - '&2the menu.'
 
 mining-gui:
   title: '&r &2&lstatistics'
-  size: 36
-  experience:
-    position: 1
+  size: 9
+  experience:  # you can put the name you want here, instead of experience.
+    position: 2
     item: experience bottle
     name: '&6&lExperience'
     lore:
       - '&2You have &6%mcmmo_xp_mining% &bXP&2.'
-      - '&6%mcmmo_xp_needed_mining% &2needed'
+      - '&6%mcmmo_xp_needed_mining% &bXP&2 &2needed'
       - '&2to level up.'
       - ' '
       - '&2You are level &6%mcmmo_level_mining%&2.'
   broken-blocks:
-    position: 3
+    position: 5
     item: iron-pickaxe
     name: '&6&lMined blocks'
     lore:
@@ -184,22 +195,367 @@ mining-gui:
       - '&6%statistic_mine_block:COAL_ORE% &2of Coal Ore,'
       - '&6%statistic_mine_block:IRON_ORE% &2of Iron Ore,'
       - '&6%statistic_mine_block:GOLD_ORE% &2of Gold Ore,'
-      - '&6%statistic_mine_block:DIAMOND_ORE% &2of Diamond Ore,'
+      - '&6%statistic_mine_block:DIAMOND_ORE% &2of Diamond Ore.'
 
 
 woodcutting-gui:
   title: '&r &2&lstatistics'
-  size: 36
+  size: 9
   experience:
-    position: 1
+    position: 2
     item: experience bottle
     name: '&6&lExperience'
     lore:
       - '&2You have &6%mcmmo_xp_woodcutting% &bXP&2.'
-      - '&6%mcmmo_xp_needed_woodcutting% &2needed'
+      - '&6%mcmmo_xp_needed_woodcutting% &bXP&2 &2needed'
       - '&2to level up.'
       - ' '
       - '&2You are level &6%mcmmo_level_woodcutting%&2.'
+  broken-blocks:
+    position: 5
+    item: iron-axe
+    name: '&6&lMined blocks'
+    lore:
+      - '&6%statistic_mine_block% &2mined blocks.'
+      - '&6%statistic_mine_block:OAK_LOG% &2of Oak Logs,'
+      - '&6%statistic_mine_block:SPRUCE_LOG% &2of Spruce Logs,'
+      - '&6%statistic_mine_block:DARK_OAK_LOG% &2of Dark Oak Logs,'
+      - '&6%statistic_mine_block:BIRCH_LOG% &2of Birch Logs.'
+
+
+excavation-gui:
+  title: '&r &2&lstatistics'
+  size: 9
+  experience:
+    position: 2
+    item: experience bottle
+    name: '&6&lExperience'
+    lore:
+      - '&2You have &6%mcmmo_xp_excavation% &bXP&2.'
+      - '&6%mcmmo_xp_needed_excavation% &bXP&2 &2needed'
+      - '&2to level up.'
+      - ' '
+      - '&2You are level &6%mcmmo_level_excavation%&2.'
+  broken-blocks:
+    position: 5
+    item: iron-shovel
+    name: '&6&lMined blocks'
+    lore:
+      - '&6%statistic_mine_block% &2mined blocks.'
+      - '&6%statistic_mine_block:GRASS_BLOCK% &2of Grass blocks,'
+      - '&6%statistic_mine_block:DIRT% &2of Dirt blocks,'
+      - '&6%statistic_mine_block:SAND% &2of Sand blocks,'
+      - '&6%statistic_mine_block:GRAVEL% &2of Gravel Blocks.'
+
+herbalism-gui:
+  title: '&r &2&lstatistics'
+  size: 9
+  experience:
+    position: 2
+    item: experience bottle
+    name: '&6&lExperience'
+    lore:
+      - '&2You have &6%mcmmo_xp_herbalism% &bXP&2.'
+      - '&6%mcmmo_xp_needed_herbalism% &bXP&2 &2needed'
+      - '&2to level up.'
+      - ' '
+      - '&2You are level &6%mcmmo_level_herbalism%&2.'
+  potted_flowers:
+    position: 5
+    item: flower pot
+    name: '&6&lPotted Flowers: &2%statistic_flower_potted%'
+
+
+fishing-gui:
+  title: '&r &2&lstatistics'
+  size: 9
+  experience:
+    position: 2
+    item: experience bottle
+    name: '&6&lExperience'
+    lore:
+      - '&2You have &6%mcmmo_xp_fishing% &bXP&2.'
+      - '&6%mcmmo_xp_needed_fishing% &bXP&2 &2needed'
+      - '&2to level up.'
+      - ' '
+      - '&2You are level &6%mcmmo_level_fishing%&2.'
+  fished-fish:
+    position: 5
+    item: fishing rod
+    name: '&6&lFish Caught: &2%statistic_fish_caught%'
+
+alchemy-gui:
+  title: '&r &2&lstatistics'
+  size: 9
+  experience:
+    position: 2
+    item: experience bottle
+    name: '&6&lExperience'
+    lore:
+      - '&2You have &6%mcmmo_xp_alchemy% &bXP&2.'
+      - '&6%mcmmo_xp_needed_alchemy% &bXP&2 &2needed'
+      - '&2to level up.'
+      - ' '
+      - '&2You are level &6%mcmmo_level_alchemy%&2.'
+  brewing-stand:
+    position: 5
+    item: brewing stand
+    name: '&6&lStatistics'
+    lore:
+      - '&6%statistic_brewingstand_interaction% &2brewing stand interactions.'
+      - '&6%statistic_item_enchanted% &2items enchanted.'
+      - '&6%statistic_beacon_interacted% &2beacon interactions'
+
+repair-gui:
+  title: '&r &2&lstatistics'
+  size: 9
+  experience:
+    position: 2
+    item: experience bottle
+    name: '&6&lExperience'
+    lore:
+      - '&2You have &6%mcmmo_xp_repair% &bXP&2.'
+      - '&6%mcmmo_xp_needed_repair% &bXP&2 &2needed'
+      - '&2to level up.'
+      - ' '
+      - '&2You are level &6%mcmmo_level_repair%&2.'
+  broken-items:
+    position: 5
+    item: damaged anvil
+    name: '&6&lBroken items: &2%statistic_break_item%'
+
+taming-gui:
+  title: '&r &2&lstatistics'
+  size: 9
+  experience:
+    position: 2
+    item: experience bottle
+    name: '&6&lExperience'
+    lore:
+      - '&2You have &6%mcmmo_xp_taming% &bXP&2.'
+      - '&6%mcmmo_xp_needed_taming% &bXP&2 &2needed'
+      - '&2to level up.'
+      - ' '
+      - '&2You are level &6%mcmmo_level_taming%&2.'
+  broken-items:
+    position: 5
+    item: bone
+    name: '&6&lInfo'
+    lore:
+      - '&6%statistic_animals_bred% &2animals bred'
+
+archery-gui:
+  title: '&r &2&lstatistics'
+  size: 9
+  experience:
+    position: 2
+    item: experience bottle
+    name: '&6&lExperience'
+    lore:
+      - '&2You have &6%mcmmo_xp_rarchery% &bXP&2.'
+      - '&6%mcmmo_xp_needed_archery% &bXP&2 &2needed'
+      - '&2to level up.'
+      - ' '
+      - '&2You are level &6%mcmmo_level_archery%&2.'
+  killed-mobs:
+    position: 5
+    item: bow
+    name: '&6&lMobs Killed'
+    lore:
+      - '&6%statistic_kill_entity:ZOMBIE% / %statistic_kill_entity:DROWNED% &2zombies/drowned'
+      - '&6%statistic_kill_entity:SKELETON% / %statistic_kill_entity:WITHER_SKELETON% &2skeletons/wither skeletons'
+      - '&6%statistic_kill_entity:CREEPER% &2creepers'
+      - '&6%statistic_kill_entity:ZOMBIE% / %statistic_kill_entity:ZOMBIE_VILLAGER% &2zombies/villagers'
+      - '&6%statistic_kill_entity:PILLAGER% &2pillagers'
+      - '&6%statistic_kill_entity:DROWNED% &2drowned'
+      - '&6%statistic_kill_entity:ZOMBIE% &2zombies'
+
+swords-gui:
+  title: '&r &2&lstatistics'
+  size: 9
+  experience:
+    position: 2
+    item: experience bottle
+    name: '&6&lExperience'
+    lore:
+      - '&2You have &6%mcmmo_xp_swords% &bXP&2.'
+      - '&6%mcmmo_xp_needed_swords% &bXP&2 &2needed'
+      - '&2to level up.'
+      - ' '
+      - '&2You are level &6%mcmmo_level_swords%&2.'
+  killed-mobs:
+    position: 5
+    item: diamond sword
+    name: '&6&lMobs Killed'
+    lore:
+      - '&6%statistic_kill_entity:ZOMBIE% / %statistic_kill_entity:DROWNED% &2zombies/drowned'
+      - '&6%statistic_kill_entity:SKELETON% / %statistic_kill_entity:WITHER_SKELETON% &2skeletons/wither skeletons'
+      - '&6%statistic_kill_entity:CREEPER% &2creepers'
+      - '&6%statistic_kill_entity:ZOMBIE% / %statistic_kill_entity:ZOMBIE_VILLAGER% &2zombies/villagers'
+      - '&6%statistic_kill_entity:PILLAGER% &2pillagers'
+      - '&6%statistic_kill_entity:DROWNED% &2drowned'
+      - '&6%statistic_kill_entity:ZOMBIE% &2zombies'
+
+axes-gui:
+  title: '&r &2&lstatistics'
+  size: 9
+  experience:
+    position: 2
+    item: experience bottle
+    name: '&6&lExperience'
+    lore:
+      - '&2You have &6%mcmmo_xp_axes% &bXP&2.'
+      - '&6%mcmmo_xp_needed_axes% &bXP&2 &2needed'
+      - '&2to level up.'
+      - ' '
+      - '&2You are level &6%mcmmo_level_axes%&2.'
+  killed-mobs:
+    position: 5
+    item: diamond axe
+    name: '&6&lMobs Killed'
+    lore:
+      - '&6%statistic_kill_entity:ZOMBIE% / %statistic_kill_entity:DROWNED% &2zombies/drowned'
+      - '&6%statistic_kill_entity:SKELETON% / %statistic_kill_entity:WITHER_SKELETON% &2skeletons/wither skeletons'
+      - '&6%statistic_kill_entity:CREEPER% &2creepers'
+      - '&6%statistic_kill_entity:ZOMBIE% / %statistic_kill_entity:ZOMBIE_VILLAGER% &2zombies/villagers'
+      - '&6%statistic_kill_entity:PILLAGER% &2pillagers'
+      - '&6%statistic_kill_entity:DROWNED% &2drowned'
+      - '&6%statistic_kill_entity:ZOMBIE% &2zombies'
+
+acrobatics-gui:
+  title: '&r &2&lstatistics'
+  size: 9
+  experience:
+    position: 2
+    item: experience bottle
+    name: '&6&lExperience'
+    lore:
+      - '&2You have &6%mcmmo_xp_acrobatics% &bXP&2.'
+      - '&6%mcmmo_xp_needed_acrobatics% &bXP&2 &2needed'
+      - '&2to level up.'
+      - ' '
+      - '&2You are level &6%mcmmo_level_acrobatics%&2.'
+  killed-mobs:
+    position: 5
+    item: diamond axe
+    name: '&6&lFalls: &2%statistic_fall_one_cm%'  # I don't know what fall_one_cm does but...yeah...
+
+unarmed-gui:
+  title: '&r &2&lstatistics'
+  size: 9
+  experience:
+    position: 3
+    item: experience bottle
+    name: '&6&lExperience'
+    lore:
+      - '&2You have &6%mcmmo_xp_unarmed% &bXP&2.'
+      - '&6%mcmmo_xp_needed_unarmed% &bXP&2 &2needed'
+      - '&2to level up.'
+      - ' '
+      - '&2You are level &6%mcmmo_level_unarmed%&2.'
+
+salvage-gui:
+  title: '&r &2&lstatistics'
+  size: 9
+  experience:
+    position: 3
+    item: experience bottle
+    name: '&6&lExperience'
+    lore:
+      - '&2You have &6%mcmmo_xp_salvage% &bXP&2.'
+      - '&6%mcmmo_xp_needed_salvage% &bXP&2 &2needed'
+      - '&2to level up.'
+      - ' '
+      - '&2You are level &6%mcmmo_level_salvage%&2.'
+
+smelting-gui:
+  title: '&r &2&lstatistics'
+  size: 9
+  experience:
+    position: 3
+    item: experience bottle
+    name: '&6&lExperience'
+    lore:
+      - '&2You have &6%mcmmo_xp_smelting% &bXP&2.'
+      - '&6%mcmmo_xp_needed_smelting% &bXP&2 &2needed'
+      - '&2to level up.'
+      - ' '
+      - '&2You are level &6%mcmmo_level_smelting%&2.'
+
+
+crouch-right-click: true
+allowed-right-click-items:  # The items here will open a stats GUI when clicked. Items must be written like the ones below.
+  mining:
+    - DIAMOND_PICKAXE
+    - GOLDEN_PICKAXE
+    - IRON_PICKAXE
+    - STONE_PICKAXE
+    - WOODEN_PICKAXE
+  woodcutting:
+    - IRON_AXE
+    - STONE_AXE
+    - WOODEN_AXE
+  excavation:
+    - DIAMOND_SHOVEL
+    - GOLDEN_SHOVEL
+    - IRON_SHOVEL
+    - STONE_SHOVEL
+    - WOODEN_SHOVEL
+  herbalism:
+    - GRASS
+    - FERN
+    - DEAD_BUSH
+    - SEAGRASS
+    - DANDELION
+    - POPPY
+    - BLUE_ORCHID
+    - ALLIUM
+    - AZURE_BLUET
+    - RED_TULIP
+    - ORANGE_TULIP
+    - WHITE_TULIP
+    - PINK_TULIP
+    - OXEYE_DAISY
+    - CORNFLOWER
+    - LILY_OF_THE_VALLEY
+    - LILAC
+    - ROSE_BUSH
+    - PEONY
+    - TALL_GRASS
+    - WHEAT_SEEDS
+    - PUMPKIN_SEEDS
+    - MELON_SEEDS
+    - BEETROOT_SEEDS
+  fishing:
+    - FISHING_ROD
+  alchemy:
+    - NETHER_WART
+    - GLASS_BOTTLE
+  repair:
+    - IRON_INGOT
+    - IRON_BLOCK
+    - ANVIL
+  taming:
+    - BONE
+  archery:
+    - ARROW
+  swords:
+    - DIAMOND_SWORD
+  axes:
+    - DIAMOND_AXE
+  acrobatics:
+    - FEATHER
+  unarmed:
+    - STICK
+  salvage:
+    - GOLDEN_HELMET
+  smelting:
+    - FURNACE
+    - COAL
+    - CHARCOAL
+
+
+
 
 
 #                                                    _______

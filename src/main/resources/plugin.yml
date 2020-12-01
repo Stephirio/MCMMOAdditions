@@ -1,5 +1,5 @@
 name: MCMMOAdditions
-version: 1.3.1
+version: 1.4.beta
 main: stephirio.mcmmoadditions.Main
 api-version: 1.16
 loadbefore: [ mcMMO ]

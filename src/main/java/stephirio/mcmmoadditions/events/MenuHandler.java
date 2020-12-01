@@ -1,8 +1,5 @@
 package stephirio.mcmmoadditions.events;
 
-import com.gmail.nossr50.api.SkillAPI;
-import com.gmail.nossr50.datatypes.skills.PrimarySkillType;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -12,14 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 import stephirio.mcmmoadditions.Main;
-import stephirio.mcmmoadditions.commands.Stats;
-
-import java.lang.reflect.Array;
 import java.util.*;
 
 /** Handler of the main menus of the plugin.
@@ -31,12 +21,10 @@ public class MenuHandler implements Listener {
     public MenuHandler(Main plugin) { this.plugin = plugin; } // Constructor
 
 
+    /** When the player clicks on a menu. */
     @EventHandler
     public void onMenuClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
-
-        /* Stats GUI
-          When clicking on an item on the Stats GUI this will happen. */
         if (event.getView().getTitle().equals(plugin.placeholderColors(player, plugin.stats.getConfig()
                 .getString("gui-title")))) {
             player.closeInventory();
@@ -48,21 +36,39 @@ public class MenuHandler implements Listener {
                             .replace(String.valueOf(ChatColor.COLOR_CHAR), "").equals("GoTroSTaTSPG1")) {
                         player.closeInventory();
                         plugin.stats.openMainGui(player);
+                    } else if (event.getCurrentItem().getItemMeta().getLore().get(0)
+                            .replace(String.valueOf(ChatColor.COLOR_CHAR), "").equals("cloSe")) {
+                        player.closeInventory();
                     }
+                } else {
+                    player.closeInventory();
                 }
             }
         }
     }
 
+
+    /** This event is executed when a player right clicks with an item in the main hand. */
     @EventHandler
     public void rightClickCrouchedItemMenu(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        if ((event.getAction() == Action.RIGHT_CLICK_AIR) && player.isSneaking()) {
-            ArrayList<ConfigurationSection> items = new ArrayList<>();
-            for (Object iteminconfig : plugin.stats.getConfig().getList("allowed-right-click-items"))
-                items.add((ConfigurationSection) iteminconfig);
-            if (items.contains(player.getInventory().getItemInMainHand())) {
-                System.out.println("ok");
+        if (((event.getAction() == Action.RIGHT_CLICK_AIR) || (event.getAction() == Action.RIGHT_CLICK_BLOCK)) &&
+                player.isSneaking()) {
+            if (plugin.stats.getConfig().getBoolean("crouch-right-click")) {
+                ConfigurationSection section = plugin.stats.getConfig()
+                        .getConfigurationSection("allowed-right-click-items");
+                for (Object skilllistitem : section.getKeys(false)) {
+                    if (section.getList((String) skilllistitem).contains(player.getInventory().getItemInMainHand().getType()
+                            .toString())) {
+                        ArrayList<String> skillitems = new ArrayList<>();
+                        for (Object skillitem : section.getList((String) skilllistitem)) {
+                            skillitems.add(plugin.materialParser((String) skillitem).toString());
+                        }
+                        if (skillitems.contains(player.getInventory().getItemInMainHand().getType().toString())) {
+                            plugin.stats.openSkillGuiByName(player, (String) skilllistitem);
+                        }
+                    }
+                }
             }
         }
     }
