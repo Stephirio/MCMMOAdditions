@@ -27,11 +27,9 @@ public final class Main extends JavaPlugin {
     public void warningLog(String string) {
         System.out.println(plugin_prefix + ChatColor.YELLOW + string);
     }
-
     public void successLog(String string) {
         System.out.println(plugin_prefix + ChatColor.GREEN + string);
     }
-
     public void severeLog(String string) {
         System.out.println(plugin_prefix + ChatColor.RED + string);
     }
