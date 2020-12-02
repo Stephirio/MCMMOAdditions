@@ -29,13 +29,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.logging.Level;
 
 public class Stats implements CommandExecutor {
 
 
 
-    private final Main plugin;
+    private Main plugin = null;
     private File configFile = null;
     private FileConfiguration dataConfig = null;
     private String configver = "Beta 1.3.1";
@@ -76,8 +75,9 @@ public class Stats implements CommandExecutor {
         if (this.dataConfig == null || this.configFile == null) return;
         try {
             this.getConfig().save(this.configFile);
-        } catch (IOException e) {
-            Main.log.log(Level.SEVERE, "Could not save the config to " + this.configFile, e);
+        } catch (IOException error) {
+            plugin.warningLog("Could not save the config to " + this.configFile);
+            plugin.warningLog(error.toString());
         }
     }
 

@@ -30,21 +30,40 @@ public class MenuHandler implements Listener {
             player.closeInventory();
             plugin.stats.openSkillGui(player, event.getCurrentItem());
         } else {
-            if (event.getCurrentItem() != null) {
-                if (event.getCurrentItem().getType().equals(Material.BARRIER)) {
-                    if (event.getCurrentItem().getItemMeta().getLore().get(0)
-                            .replace(String.valueOf(ChatColor.COLOR_CHAR), "").equals("GoTroSTaTSPG1")) {
-                        player.closeInventory();
-                        plugin.stats.openMainGui(player);
-                    } else if (event.getCurrentItem().getItemMeta().getLore().get(0)
-                            .replace(String.valueOf(ChatColor.COLOR_CHAR), "").equals("cloSe")) {
-                        player.closeInventory();
+            String[] names = {plugin.stats.getConfig().getString("mining-item-name"),
+                    plugin.stats.getConfig().getString("woodcutting-item-name"),
+                    plugin.stats.getConfig().getString("excavation-item-name"),
+                    plugin.stats.getConfig().getString("fishing-item-name"),
+                    plugin.stats.getConfig().getString("swords-item-name"),
+                    plugin.stats.getConfig().getString("repair-item-name"),
+                    plugin.stats.getConfig().getString("salvage-item-name"),
+                    plugin.stats.getConfig().getString("archery-item-name"),
+                    plugin.stats.getConfig().getString("acrobatics-item-name"),
+                    plugin.stats.getConfig().getString("unarmed-item-name"),
+                    plugin.stats.getConfig().getString("smelting-item-name"),
+                    plugin.stats.getConfig().getString("axes-item-name"),
+                    plugin.stats.getConfig().getString("taming-item-name"),
+                    plugin.stats.getConfig().getString("alchemy-item-name"),
+                    plugin.stats.getConfig().getString("herbalism-item-name"),
+            };
+            for (String name : names) {
+                if (event.getView().getTitle().contains(plugin.placeholderColors(player, name)))
+                    if (event.getCurrentItem() != null) {
+                        if (event.getCurrentItem().getType().equals(Material.BARRIER)) {
+                            if (event.getCurrentItem().getItemMeta().getLore().get(0)
+                                    .replace(String.valueOf(ChatColor.COLOR_CHAR), "").equals("GoTroSTaTSPG1")) {
+                                player.closeInventory();
+                                plugin.stats.openMainGui(player);
+                            } else if (event.getCurrentItem().getItemMeta().getLore().get(0)
+                                    .replace(String.valueOf(ChatColor.COLOR_CHAR), "").equals("cloSe")) {
+                                player.closeInventory();
+                            }
+                        } else {
+                            player.closeInventory();
+                        }
                     }
-                } else {
-                    player.closeInventory();
                 }
             }
-        }
     }
 
 

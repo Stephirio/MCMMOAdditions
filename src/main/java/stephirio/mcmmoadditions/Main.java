@@ -11,26 +11,34 @@ import stephirio.mcmmoadditions.commands.Stats;
 import stephirio.mcmmoadditions.events.LevelUp;
 import stephirio.mcmmoadditions.events.MenuHandler;
 import stephirio.mcmmoadditions.events.UpdateChecker;
-import me.clip.placeholderapi.expansion.cloud.CloudExpansion;
-import me.clip.placeholderapi.PlaceholderAPIPlugin;
-
-import java.util.Objects;
-import java.util.logging.Logger;
 
 
 /** Main class of the entire plugin. */
 public final class Main extends JavaPlugin {
 
 
-    public static final Logger log = Logger.getLogger("Minecraft");
     public static Economy econ = null;
     private Integer pluginID = 85779;
     public Stats stats;
+    String plugin_prefix = ChatColor.GREEN + "[" + ChatColor.GOLD + "MCMMO-A" + ChatColor.GREEN + "] " + ChatColor.RESET;
 
 
+
+    public void warningLog(String string) {
+        System.out.println(plugin_prefix + ChatColor.YELLOW + string);
+    }
+
+    public void successLog(String string) {
+        System.out.println(plugin_prefix + ChatColor.GREEN + string);
+    }
+
+    public void severeLog(String string) {
+        System.out.println(plugin_prefix + ChatColor.RED + string);
+    }
 
     @Override
     public void onEnable() {
+
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
         reloadConfig();
@@ -38,35 +46,30 @@ public final class Main extends JavaPlugin {
         stats.getConfig().options().copyDefaults(true);
         stats.saveDefaultConfig();
         stats.reloadConfig();
-        if (!stats.getConfig().getString("version").equals("Beta 1.4")) {
-            log.warning("Your stats.yml configuration file is outdated. Please use the new one: https://github.com/Stephirio/MCMMOAdditions/blob/master/src/main/resources/stats.yml");
-        }
-        if (!setupEconomy()) {
-            log.severe(String.format("[%s] - Not able to detect Vault.", getDescription().getName()));
-        }
+
+        if (!stats.getConfig().getString("version").equals("Beta 1.4"))
+            warningLog("Your stats.yml configuration file is outdated. Please use the new one: " +
+                    "https://github.com/Stephirio/MCMMOAdditions/blob/master/src/main/resources/stats.yml");
+        if (!setupEconomy()) severeLog("[%s] - Not able to detect Vault.");
+
+        new UpdateChecker(this, pluginID).getLatestVersion(version -> {
+            if(this.getDescription().getVersion().equalsIgnoreCase(version))
+                System.out.println("[MCMMO-A] Plugin is up to date.");
+            else
+                warningLog("A new version of MCMMOAdditions is available. Download it now at " +
+                        "https://www.spigotmc.org/threads/mcmmoadditions.85779/");
+        });
+
         getCommand("stats").setExecutor(new Stats(this));
         getCommand("mcmmoareload").setExecutor(new Reload(this));
         getServer().getPluginManager().registerEvents(new MenuHandler(this), this);
         getServer().getPluginManager().registerEvents(new LevelUp(this), this);
-        new UpdateChecker(this, pluginID).getLatestVersion(version -> {
-            if(this.getDescription().getVersion().equalsIgnoreCase(version)) {
-                System.out.println("[MCMMO-A] Plugin is up to date.");
-            } else {
-                log.warning("A new version of MCMMOAdditions is available. Download it now at " +
-                        "https://www.spigotmc.org/threads/mcmmoadditions.85779/");
-            }
-        });
+
     }
 
 
-
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
-    }
-
-
-
+    /** From the Vault API "tutorial" made by MilkBowl. It setups the economy of the server using Vault.
+     * @return boolean */
     private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
             return false;
@@ -81,7 +84,8 @@ public final class Main extends JavaPlugin {
 
 
 
-    /** Makes the vault economy API available for other classes */
+    /** Makes the vault economy API available for other classes
+     * @return Economy */
     public Economy vaultEconomy() {
         RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
         assert rsp != null;
@@ -89,11 +93,17 @@ public final class Main extends JavaPlugin {
     }
 
 
+    /** A custom method to easily replace color codes.
+     * @return String */
+    public String colors(String string) {
+        return ChatColor.translateAlternateColorCodes('&', string);
+    }
+
 
     /** A custom method to easily replace placeholders and color codes.
      * @return String */
     public String placeholderColors(Player player, String string) {
-        return ChatColor.translateAlternateColorCodes('&', PlaceholderAPI.setPlaceholders(player, string));
+        return PlaceholderAPI.setPlaceholders(player, colors(string));
     }
 
 
@@ -104,6 +114,9 @@ public final class Main extends JavaPlugin {
         return Material.valueOf(material.toUpperCase().replace(' ', '_').replace('-', '_'));
     }
 
+
+    /** This method converts a string to an invisible one and codifies it in a very basic way. This allows to hide strings in lores, items names and inventories.
+     * @return String */
     public String convertToInvisibleString(String s) {
         StringBuilder hidden = new StringBuilder();
         for (char c : s.toCharArray()) hidden.append(ChatColor.COLOR_CHAR + "").append(c);
